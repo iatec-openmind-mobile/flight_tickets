@@ -1,0 +1,56 @@
+{
+    "tickets": [
+        {
+            "company": "Aeroloft",
+            "price": 394,
+            "departure": {
+                "name": "LON",
+                "time": "06:30"
+            },
+            "arrival": {
+                "name": "MOW",
+                "time": "01:45"
+            },
+            "duration": "5h 15min (1 stop)"
+        },
+        {
+            "company": "LOT",
+            "price": 594,
+            "departure": {
+                "name": "VCP",
+                "time": "08:00"
+            },
+            "arrival": {
+                "name": "HND",
+                "time": "07:45"
+            },
+            "duration": "9h 45m (1 stop)"
+        },
+        {
+            "company": "Lufthansa",
+            "price": 456,
+            "departure": {
+                "name": "BSB",
+                "time": "07:25"
+            },
+            "arrival": {
+                "name": "VCP",
+                "time": "03:10"
+            },
+            "duration": "5h 45min (1 stop)"
+        },
+        {
+            "company": "Gol",
+            "price": 211,
+            "departure": {
+                "name": "HND",
+                "time": "11:30"
+            },
+            "arrival": {
+                "name": "JFK",
+                "time": "16:45"
+            },
+            "duration": "4h 15min (1 stop)"
+        }
+    ]
+}
