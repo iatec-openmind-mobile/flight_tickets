@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import 'colors.dart';
-import 'flight_ticket.dart';
+import '../colors.dart';
+import '../models/flight_ticket.dart';
 
 class TicketCard extends StatelessWidget {
   final FlightTicket ticket;

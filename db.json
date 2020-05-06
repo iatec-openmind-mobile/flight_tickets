@@ -1,7 +1,7 @@
 {
     "tickets": [
         {
-            "company": "Aeroloft",
+            "company": "Aeroflot",
             "price": 394,
             "departure": {
                 "name": "LON",
