@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'shared/colors.dart';
 import 'shared/models/flight_ticket.dart';
+import 'shared/repositories/tickets_repository.dart';
 import 'shared/widgets/ticket_card.dart';
 import 'shared/widgets/topbar.dart';
 
@@ -36,28 +38,58 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+      GlobalKey<RefreshIndicatorState>();
+
+  List<FlightTicket> tickets = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadTickets();
+    
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      _refreshIndicatorKey.currentState?.show();
+    });
+  }
+
+  Future<void> _loadTickets() => TicketsRepository().getTickets().then(
+        (result) => setState(
+          () {
+            tickets = result;
+          },
+        ),
+      );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: MyColors.backgroundGrey,
       body: Stack(
         children: <Widget>[
-          ListView.separated(
-            padding: EdgeInsets.fromLTRB(
-              24.0,
-              150.0 + MediaQuery.of(context).padding.top,
-              24.0,
-              15.0,
-            ),
-            itemBuilder: (_, index) => TicketCard(ticket: tickets[index]),
-            itemCount: tickets.length,
-            separatorBuilder: (_, __) => const SizedBox(height: 12),
-          ),
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            child: Topbar(),
+          Column(
+            children: <Widget>[
+              Topbar(results: tickets.length),
+              Expanded(
+                child: RefreshIndicator(
+                  key: _refreshIndicatorKey,
+                  onRefresh: _loadTickets,
+                  child: ListView.separated(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    padding: EdgeInsets.fromLTRB(
+                      24.0,
+                      MediaQuery.of(context).padding.top,
+                      24.0,
+                      15.0,
+                    ),
+                    itemBuilder: (_, index) =>
+                        TicketCard(ticket: tickets[index]),
+                    itemCount: tickets.length,
+                    separatorBuilder: (_, __) => const SizedBox(height: 12),
+                  ),
+                ),
+              ),
+            ],
           ),
           Positioned(
             bottom: 0,

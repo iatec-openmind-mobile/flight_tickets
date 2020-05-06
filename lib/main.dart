@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:layout/shared/repositories/tickets_repository.dart';
 
 import 'shared/colors.dart';
+import 'shared/models/flight_ticket.dart';
 import 'shared/widgets/ticket_card.dart';
 import 'shared/widgets/topbar.dart';
 
@@ -35,60 +35,52 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-final tickets = TicketsRepository().getTickets();
-
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: MyColors.backgroundGrey,
-      body: FutureBuilder(
-        future: tickets,
-        builder: (context, snapshot) =>
-            snapshot.connectionState == ConnectionState.done && snapshot.hasData
-                ? Stack(
-                    children: <Widget>[
-                      ListView.separated(
-                        padding: EdgeInsets.fromLTRB(
-                          24.0,
-                          150.0 + MediaQuery.of(context).padding.top,
-                          24.0,
-                          15.0,
-                        ),
-                        itemBuilder: (_, index) =>
-                            TicketCard(ticket: snapshot.data[index]),
-                        itemCount: snapshot.data.length,
-                        separatorBuilder: (_, __) => const SizedBox(height: 12),
-                      ),
-                      Positioned(
-                        top: 0,
-                        left: 0,
-                        right: 0,
-                        child: Topbar(),
-                      ),
-                      Positioned(
-                        bottom: 0,
-                        left: 0,
-                        right: 0,
-                        child: IgnorePointer(
-                          child: Container(
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                begin: Alignment.topCenter,
-                                end: Alignment.bottomCenter,
-                                colors: [
-                                  MyColors.backgroundGrey.withAlpha(0),
-                                  Colors.white,
-                                ],
-                              ),
-                            ),
-                            height: 188.0,
-                          ),
-                        ),
-                      )
+      body: Stack(
+        children: <Widget>[
+          Column(
+            children: <Widget>[
+              Topbar(),
+              Expanded(
+                child: ListView.separated(
+                  padding: EdgeInsets.fromLTRB(
+                    24.0,
+                    MediaQuery.of(context).padding.top,
+                    24.0,
+                    15.0,
+                  ),
+                  itemBuilder: (_, index) => TicketCard(ticket: tickets[index]),
+                  itemCount: tickets.length,
+                  separatorBuilder: (_, __) => const SizedBox(height: 12),
+                ),
+              ),
+            ],
+          ),
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: IgnorePointer(
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      MyColors.backgroundGrey.withAlpha(0),
+                      Colors.white,
                     ],
-                  )
-                : Center(child: const CircularProgressIndicator()),
+                  ),
+                ),
+                height: 188.0,
+              ),
+            ),
+          )
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},

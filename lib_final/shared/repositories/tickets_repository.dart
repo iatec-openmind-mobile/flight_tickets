@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 
-import 'package:layout/shared/models/flight_ticket.dart';
+import '../models/flight_ticket.dart';
 
 class TicketsRepository {
   final Dio http = Dio(BaseOptions(baseUrl: "http://localhost:3000"));
