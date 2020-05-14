@@ -4,6 +4,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../colors.dart';
 import '../models/flight_ticket.dart';
 
+/// A card representing a flight ticket
+/// 
+/// Currently, it is only visual and has no behavior.
 class TicketCard extends StatelessWidget {
   final FlightTicket ticket;
 

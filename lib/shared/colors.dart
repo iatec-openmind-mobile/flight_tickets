@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// A set of custom colors used through the app
 abstract class MyColors {
   MyColors._();
 

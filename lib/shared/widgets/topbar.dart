@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:layout/shared/colors.dart';
 
+/// The main app topbar
+///
+/// Currently, it is only visual and has no behavior.
 class Topbar extends StatelessWidget {
+  final int results;
+
+  const Topbar({Key key, @required this.results})
+      : assert(results != null),
+        super(key: key);
+
   @override
   Widget build(BuildContext context) => Container(
         padding: EdgeInsets.fromLTRB(
@@ -42,13 +51,14 @@ class Topbar extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 8),
-                Text(
-                  "13 results",
-                  style: TextStyle(
-                    color: MyColors.softPurple,
-                    fontSize: 16,
+                if (results > 0)
+                  Text(
+                    "$results results",
+                    style: TextStyle(
+                      color: MyColors.softPurple,
+                      fontSize: 16,
+                    ),
                   ),
-                ),
               ],
             ),
           ],
